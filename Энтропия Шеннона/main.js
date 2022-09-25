@@ -3,9 +3,6 @@ s = ''
 if (s.length === 0)
     console.log("enter something")
 
-else if (s.length === 1)
-    print(s, 0)
-
 else {
     alph = []
 
@@ -27,10 +24,13 @@ else {
     }
     else {
         let H = 0
+
         for (let key in alph) {
             let p = alph[key]
-            H -= p * Math.log(p) / Math.log(n)
+            H -= p * Math.log(p)
         }
+
+        H /= Math.log(n)
         print(s, H)
     }
 }
