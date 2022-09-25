@@ -34,8 +34,15 @@ function code(decode) {
 
         else if (decode.charAt(i) == "#" || cnt >= 4) {
 
-            for (; cnt > 0; cnt -= 255)
-                code += "#" + String.fromCharCode(Math.min(cnt, 255)) + decode.charAt(i)
+            let end = String.fromCharCode(255);
+
+            for (; cnt > 255; cnt -= 255)
+                code += "#" + end + decode.charAt(i)
+
+            if (cnt >= 4)
+                code += "#" + String.fromCharCode(cnt) + decode.charAt(i);
+            else
+                code += mult(decode.charAt(i), cnt)
 
             cnt = 1
         }
