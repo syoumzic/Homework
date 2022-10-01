@@ -84,16 +84,9 @@ else
     }
 }
 
-//console.log(codes)
+
 codeStr = code(codes, inpStr)
-console.log(codeStr)
+fs.writeFileSync("code.txt", codeStr)
 
 decodeStr = decode(tree, codeStr)
-console.log(decodeStr)
-
-console.log(inpStr)
-
-console.log(inpStr == decodeStr)
-
-fs.writeFileSync("code.txt", codeStr)
 fs.writeFileSync("output.txt", decodeStr)
