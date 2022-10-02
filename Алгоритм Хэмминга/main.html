@@ -57,12 +57,9 @@
 			document.getElementById('decoded').value = input.join('')
 		}
 
-		function onKeypress() {
-			document.getElementById("input").oninput = function () {
-				var v = this.value;           // get the value from the input
-				v = v.replace(/[^01]/g, '');  // replace anything that isn't 0 or 1 by ''
-				this.value = v;               // set the value of the input to the new value
-			}
+		function onKeyUp() {
+			input = document.getElementById('input')
+			input.value = input.value.replace(/[^01]/g, '');
 		}
 
 	</script>
@@ -71,7 +68,7 @@
 
 <body>
 	<h1>My Hamming Code</h1>
-	<p><input type='text' id='input' onkeypress='onKeypress()' /> any bites </p>
+	<p><input type='text' id='input' onKeyUp='onKeyUp()' /> any bites </p>
 	<p><input type='button' value='To code' onClick='code()' /></p>
 
 	<p><input type='text' id='encoded' /> coded bits</p>
