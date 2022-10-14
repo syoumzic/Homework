@@ -1,0 +1,17 @@
+input %100
+input %101
+begin:
+is_equal %100 0
+jump repeat
+jump end
+repeat:
+is_less %100 %101
+jump do
+set %102 %101
+set %101 %100
+set %100 %102
+do:
+mod %100 %101
+jump begin
+end:
+output %101

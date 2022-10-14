@@ -1,0 +1,8 @@
+input &100    
+set &101 1
+return:
+mult &101 &100
+sub &100 1
+is_equal &100 1
+jump return
+output &101
