@@ -1,3 +1,8 @@
+/*
+*  Краснов Артём
+*  КНМО-101
+*/
+
 function hash(str){
   n = 0
   for(let i=0; i<str.length; ++i)
