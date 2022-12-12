@@ -42,36 +42,46 @@ function getSingle(template){
     }
     return single;
 }
+function find(template, text){
+    shifts = getShift(template);
+    single = getSingle(template);
+    i = 0;
+    last = template.length - 1;
+    M = [];
 
-text = "карл у клара украл караллы, клара у карл украла кларнет";
-template = "клара";
-shifts = getShift(template);
-single = getSingle(template);
-/*fs = require("fs");
-text = fs.readFileSync("");*/
-
-i = 0;
-last = template.length - 1;
-M = [];
-
-while(i < text.length - last){
-    for(l=0; l<template.length; ++l)
-        if(template[last - l] != text[i + last - l])
-           break;
+    while(i < text.length - last){
+        for(l=0; l<template.length; ++l)
+            if(template[last - l] != text[i + last - l])
+               break;
     
-    if(l == 0){
-        if(text[i + last] in single)
-            i += single[text[i + last]];
-        else
+        if(l == 0){
+            if(text[i + last] in single)
+                i += single[text[i + last]];
+            else
+                i += template.length;
+        }
+        else if(l == template.length){
+            M.push(i);
             i += template.length;
+        }
+        else{
+            i += shifts[l]; 
+        }
     }
-    else if(l == template.length){
-        M.push(i);
-        i += template.length;
-    }
-    else{
-        i += shifts[l]; 
-    }
+    
+    return M;
 }
 
-console.log("Вхождения:", M);
+function test(template, text){
+    begin = new Date().getTime();
+    find(template, text);
+    end = new Date().getTime();
+    console.log('Поиск "'+ template + '": ' + (end - begin) + ' ms');
+}
+
+fs = require("fs")
+text = fs.readFileSync("Толстой Лев Николаевич. Война и мир.txt").toString();
+
+test("князь", text);
+test("князь Андрей", text);
+test("князь Андрей Болконский", test);
