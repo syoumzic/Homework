@@ -80,7 +80,7 @@ function test(template, text){
 }
 
 fs = require("fs")
-text = fs.readFileSync("Толстой Лев Николаевич. Война и мир.txt").toString();
+text = fs.readFileSync("Война и мир.txt").toString();
 
 test("князь", text);
 test("князь Андрей", text);
