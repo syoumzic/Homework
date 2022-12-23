@@ -37,12 +37,16 @@
 		}
 
 		function Stop(){
+			run = false;
 			clearInterval(loop)
 		}
 
 		function Resume(){
-			draw();
-			loop = setInterval(function(){update(), draw()}, 125)	
+			if(run == false){
+				draw();
+				loop = setInterval(function(){update(), draw()}, 125)	
+				run = true;
+			}
 		}
 
 		function draw() {
@@ -97,6 +101,7 @@
 			draw()
 		});
 
+		run = false;
 		Init();
 		Resume();
 	</script>
