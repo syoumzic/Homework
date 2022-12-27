@@ -8,9 +8,6 @@ function getShift(template){
             if(template[i - l] != template[template.length - l - 1])
                 break;
 
-        if(l == 2)
-            console.log()
-
         if(l > 0){
             shift = template.length - i - 1;
 
