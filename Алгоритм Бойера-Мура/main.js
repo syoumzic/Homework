@@ -1,35 +1,26 @@
 function getShift(template){
-    shifts = new Array(template.length);
-   
-    pi = new Array(template.length);  //перевëрнутая префикс функции
-    pi[0] = 0;
-    
-    last = template.length - 1;
-    for(let i = 1; i < template.length; ++i){
-        j = pi[i - 1];
-       
-        while(j > 0 && template[last - i] != template[last - j])
-            j = pi[j - 1];
-          
-        if(template[last - i] == template[last - j])
-            ++j;
-        pi[i] = j;
-    }
-   
-    rpr = new Array(template.length);
-    for(let i = pi[last]; i < template.length; ++i)
-        rpr[i] = pi[last] - i;
+    let shifts = new Array(template.length + 1).fill(template.length);
 
-    for(let i = 0; i < template.length - 2; ++i){
-        if(template[i - pi[last - i]] != template[last - pi[last - i]]) 
-            rpr[pi[last - i]] = i;
+    let l;
+    let lastChar = template[template.length - 1]
+    for(let i=template.length - 2; i >= 0; --i){
+        for(l = 0; i - l >= 0; ++l)
+            if(template[i - l] != template[template.length - l - 1])
+                break;
+
+        if(l == 2)
+            console.log()
+
+        if(l > 0){
+            shift = template.length - i - 1;
+
+            if(i - l == -1)
+                for(let j=l; j<shifts.length; ++j)
+                    shifts[j] = Math.min(shifts[j], shift)
+            shifts[l] = Math.min(shifts[l], shift);
+        }
     }
-   
-    shifts = new Array(template.length);
-    for(let l = 0; l < template.length; ++l){
-        shifts[l] = template.length - l - rpr[l];
-    }
-   
+
     return shifts;
 }
 
@@ -43,13 +34,14 @@ function getSingle(template){
     return single;
 }
 function find(template, text){
-    shifts = getShift(template);
-    single = getSingle(template);
-    i = 0;
-    last = template.length - 1;
-    M = [];
-
-    while(i < text.length - last){
+    let shifts = getShift(template);
+    let single = getSingle(template);
+    let i = 0;
+    let last = template.length - 1;
+    let M = [];
+    let l;
+    
+    while(i <= text.length - template.length){
         for(l=0; l<template.length; ++l)
             if(template[last - l] != text[i + last - l])
                break;
@@ -60,12 +52,10 @@ function find(template, text){
             else
                 i += template.length;
         }
-        else if(l == template.length){
-            M.push(i);
-            i += template.length;
-        }
         else{
-            i += shifts[l]; 
+            if(l == template.length)
+                M.push(i)
+            i += shifts[l];
         }
     }
     
